@@ -84,7 +84,8 @@ const PanelOverlay = () => {
   const {
     enabled,
     enabledDetails,
-    content: pageContent
+    content: pageContent,
+    handleSummarizationResult
   } = usePageContent(urlNormalize(location.href))
   const enabledRef = useRef(false)
   const pageContentRef = useRef(null)
@@ -155,6 +156,8 @@ const PanelOverlay = () => {
         }
 
         summarizePage()
+      } else if (msg?.name === MessageNames.SummarizePage && msg.result) {
+        handleSummarizationResult(msg.result);
       }
     }
     chrome.runtime.onMessage.addListener(listener)

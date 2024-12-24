@@ -53,5 +53,12 @@ export function usePageContent(url: string) {
     setContent(content)
   }, [articleContainers, enabled, config])
 
-  return { enabled, enabledDetails, content } as const
+  const handleSummarizationResult = (result) => {
+    setContent((prevContent) => ({
+      ...prevContent,
+      summarizationResult: result
+    }));
+  };
+
+  return { enabled, enabledDetails, content, handleSummarizationResult } as const
 }

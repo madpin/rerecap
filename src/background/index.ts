@@ -125,5 +125,21 @@ chrome.runtime.onMessage.addListener(async function (
   } else if (msg.name === MessageNames.FixChatGPTWebAppAuthState) {
     await chatGPTWebAppClient.fixAuthState()
     sendResponse()
+  } else if (msg.name === MessageNames.SummarizePage) {
+    try {
+      const result = await summarize(msg.content);
+      chrome.tabs.sendMessage(sender.tab.id, {
+        name: MessageNames.SummarizePage,
+        result
+      });
+    } catch (error) {
+      console.error(error);
+      chrome.tabs.sendMessage(sender.tab.id, {
+        name: MessageNames.SummarizePage,
+        error: error.message
+      });
+    }
+  } else if (msg.name === MessageNames.TogglePanel) {
+    chrome.tabs.sendMessage(sender.tab.id, { name: MessageNames.TogglePanel });
   }
 })
