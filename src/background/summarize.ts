@@ -56,4 +56,5 @@ export async function summarize(port: chrome.runtime.Port, text: string) {
     }
   })
   cleanup = ret?.cleanup
+  return ret;
 }
